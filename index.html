@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2024 My Own Diary</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;300;400;500;600;700&family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        /* font-family: "IBM Plex Sans KR", sans-serif; */
+        font-family: "Noto Sans KR", sans-serif;
+      }
+      input#title,
+      textarea#detail {
+        padding: 15px;
+      }
+      input#title::placeholder {
+      }
+      textarea#detail::placeholder {
+        /* padding: 50px; */
+      }
+      .bgCont{
+        width: 100vw;
+        height: 100vh;
+        background: url("./img/winterBgBB.png") no-repeat center center;
+        background-size: cover;
+        backdrop-filter: blur(10px);
+      }
+
+      #springCont {
+        height: 590px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: flex-start;
+        flex-direction: column;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+      }
+      #noteSpring {
+        width: 26px;
+        height: 26px;
+        background: #d7e7e6;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: flex-start;
+        flex-direction: column;
+        z-index: 1000;
+      }
+      #noteSpring span {
+        display: block;
+        width: 56px;
+        height: 3px;
+        background: #828282;
+        margin-left: -40px;
+      }
+      #springCont {
+        display: flex;
+      }
+      h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2d2d2d;
+        margin: 0;
+        font-family: "IBM Plex Sans KR", sans-serif;
+      }
+      p {
+        font-size: 18px;
+        font-weight: 400;
+        color: #3d3d3d;
+        margin: 0;
+        margin-top: 20px;
+      }
+
+      #intro {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        z-index: 999999;
+        background: url("./img/introBg01.png") no-repeat center center;
+        background-size: cover;
+      }
+      #intro .btmImg{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 10;
+        width: 100%;
+      }
+      #intro .moveImg{
+        position: absolute;
+        right: -40%;
+        bottom: 220px;
+        z-index: 5;
+        width: 30%;
+
+        animation: introImg 7s both;
+      }
+      #intro .title{
+        width: 20%;
+        line-height: 1;
+        text-align: center;
+        font-family: "IBM Plex Sans KR", sans-serif;
+
+        position: absolute;
+        left: 50%;
+        top: 120px;
+        transform: translateX(-50%) scale(0.8); 
+        opacity: 0;
+        z-index: 15;
+        animation: introtitle 3s both;
+        animation-delay: 2.5s;
+      }
+      #intro .title h2{
+        font-size: 92px;
+        font-weight: 700;
+        color: #753F3F;
+        margin: 0;
+      }
+      #intro .title p{
+        font-size: 46px;
+        font-weight: 500;
+        color: #753F3F;
+        margin: 0;
+        margin-top: 20px;
+        text-transform: uppercase;
+      }
+
+      @keyframes introImg {
+        0% {
+          right: -40%;
+        }
+        50% {
+          right: 35%;
+        }
+        100% {
+          right: 110%;
+        }
+      }
+
+      @keyframes introtitle {
+        0% {
+          transform: translateX(-50%) scale(0.8); 
+          opacity: 0;
+        }
+
+        100% {
+          transform: translateX(-50%) scale(1); 
+          opacity: 1;
+        }
+      }
+
+      #start{
+        width: 480px;
+        height: 660px;
+        background: rgb(214, 147, 90);
+        border-radius: 15px;
+        text-align: center;
+        padding-top: 100px;
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #start .title{
+      }
+      #start .title h2{
+        font-size: 62px;
+        font-weight: 600;
+        line-height: 1;
+        color: #753F3F;        
+      }
+      #start .title p{
+        font-size: 42px;
+        font-weight: 500;
+        line-height: 1;
+        color: #753F3F;        
+        text-transform: uppercase;
+      }
+      #start #enterButton{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 180px;
+        height: 42px;
+        border-radius: 50px;
+        border-color: #753F3F;
+ 
+        font-size: 14px;
+        font-weight: 600;
+        color: #753F3F;        
+        text-transform: uppercase;
+      }
+      #start img{
+        width: 40%;
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+      }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../common/common.js"></script>
+    <script src="./design.js"></script>
+    <script src="./intro.js"></script>
+    <script>
+      // 변수 초기화
+      let topPosition = 0;
+      let noteIdCounter = 1;
+      let labelIdCounter = 1;
+      let saveButton;
+      let titleInput;
+      let detailInput;
+      let noteContainer;
+      let pagesArray = [];
+      let addLabel;
+      let entry;
+
+      let selectedNote;
+      // // 새로운 노트 페이지 생성 함수
+      function createNotePage(title, detail) {
+        // 현재 날짜와 시간을 가져오기
+        let currentDate = new Date();
+        let formattedDate = currentDate.toLocaleString();
+
+        // 새로운 노트 페이지 요소 생성
+        let notePage = document.createElement("div");
+        notePage.className = "notePage";
+        notePage.id = "noteNo" + noteIdCounter++;
+        notePage.style.borderRadius = "15px";
+        notePage.style.width = 100 + "%";
+        notePage.style.height = 100 + "%";
+        notePage.style.position = "absolute";
+        notePage.style.top = 0 + "px";
+        notePage.style.left = 0 + "px";
+        notePage.style.background = "#fff";
+
+        // 제목과 내용을 담은 하위 요소 추가
+        let entry = document.createElement("div");
+        let h2 = document.createElement("h2");
+        let p = document.createElement("p");
+
+        h2.innerHTML = title;
+        p.innerHTML = detail + "<br>" + formattedDate;
+
+        entry.appendChild(h2);
+        entry.appendChild(p);
+        entry.style.padding = "50px 35px 0 70px";
+
+        // 클릭 이벤트 리스너 추가
+        h2.addEventListener("click", function () {
+            let newContent = prompt("수정할 제목을 입력하세요", h2.innerHTML);
+            if (newContent !== null) {
+                h2.innerHTML = newContent;
+            }
+        });
+
+        p.addEventListener("click", function () {
+            let newContent = prompt("수정할 내용을 입력하세요", p.innerHTML);
+            if (newContent !== null) {
+                p.innerHTML = newContent + "<br>" + formattedDate;
+            }
+        });
+
+        notePage.appendChild(entry);
+
+        // 노트 페이지에 클릭 레이블 추가
+        addClickLabel(notePage);
+
+        // 배열에 notePage 추가
+        pagesArray.push(notePage);
+
+        return notePage;
+    }
+
+
+      let labelCounter = 1; 
+
+      // 클릭 레이블 추가 함수
+      function addClickLabel(parentElement) {
+        // 클릭 레이블 요소 생성
+        let addLabel = document.createElement("div");
+        addLabel.className = "addLabel";
+        addLabel.id = "labelNo" + labelIdCounter++;
+        topPosition += 36;
+        addLabel.style.width = 60 + "px";
+        addLabel.style.height = 30 + "px";
+        addLabel.style.position = "absolute";
+        addLabel.style.top = topPosition + "px";
+        addLabel.style.left = "calc(100% - 20px)";
+        addLabel.style.cursor = "pointer";
+        addLabel.style.opacity = 0.5;
+        addLabel.style.color = "black";
+        addLabel.style.textAlign = "right";
+        addLabel.style.paddingRight = 10 + "px";
+        addLabel.style.lineHeight = 30 + "px";
+        addLabel.style.fontSize = 22 + "px";
+        addLabel.style.fontWeight = 900;
+        addLabel.labelNumber = labelCounter; // Assign and increment label number
+        addLabel.innerText = labelCounter++;
+
+        // 레이블의 배경색 랜덤 설정
+        addLabel.style.backgroundColor = `rgb(${getRandom(255)}, ${getRandom(
+          255
+        )}, ${getRandom(255)})`;
+
+        // 클릭 이벤트 리스너 추가
+        addLabel.addEventListener("click", function () {
+          // 클릭한 노트를 selectedNote 변수에 저장
+          selectedNote = parentElement;
+          // 클릭한 레이블과 연결된 노트 페이지를 최상위로 가져오기
+          parentElement.style.zIndex = noteIdCounter++;
+        });
+
+        // 부모 요소에 클릭 레이블 추가
+        parentElement.appendChild(addLabel);
+      }
+
+      // 내용 삭제 함수
+      function del() {
+        if (!selectedNote) {
+          // 경고 메시지 출력
+          alert("삭제할 노트 페이지를 선택해주세요.");
+          return;
+        }
+
+        let result = confirm("선택된 내용을 삭제 하시겠습니까?");
+        if (result && selectedNote) {
+          // 상위 항목에서 선택한 메모를 제거
+          const index = pagesArray.indexOf(selectedNote);
+          if (index !== -1) {
+            pagesArray.splice(index, 1);
+            selectedNote.parentNode.removeChild(selectedNote);
+            // selectedNote 변수 재설정
+            selectedNote = null;
+          }
+        }
+      }
+
+      // 수정 함수
+      function retouch() {
+        // 가장 높은 z-index를 가진 노트 페이지가 있으면 retouchPopup 보이게 설정
+        if (targetNotePage) {
+          retouchPopup.style.display = "flex";
+        }
+      }
+
+      // 로드 이벤트 리스너 추가
+      // 로드 이벤트 리스너 추가
+      addEventListener("load", function () {
+        // 필요한 요소들을 변수에 할당
+        saveButton = document.getElementById("save");
+        titleInput = document.getElementById("title");
+        detailInput = document.getElementById("detail");
+        noteContainer = document.getElementById("note");
+
+        // 저장 버튼에 클릭 이벤트 리스너 추가
+        saveButton.addEventListener("click", function () {
+          // 입력된 제목과 내용 값 가져오기
+          let titleValue = titleInput.value;
+          let detailValue = detailInput.value;
+
+          // 입력된 값이 없을 경우 경고 출력
+          if (!titleValue && !detailValue) {
+            alert("제목과 내용을 입력하세요.");
+            titleInput.focus(); // 제목 입력란에 커서를 올림
+            return;
+          } else if (!titleValue) {
+            alert("제목을 입력하세요.");
+            titleInput.focus(); // 제목 입력란에 커서를 올림
+            return;
+          } else if (!detailValue) {
+            alert("내용을 입력하세요.");
+            detailInput.focus(); // 내용 입력란에 커서를 올림
+            return;
+          }
+
+          // 입력된 값이 있을 경우에만 노트 페이지 생성 및 추가
+          let notePage = createNotePage(titleValue, detailValue);
+          noteContainer.appendChild(notePage);
+
+          // 입력 필드 초기화
+          titleInput.value = "";
+          detailInput.value = "";
+
+          // 입력이 완료된 후에 다시 titleInput으로 포커스 이동
+          titleInput.focus();
+        });
+
+        // 입력 필드에서 Enter 키 이벤트 처리
+        titleInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault(); // Enter 키의 기본 동작을 취소
+            saveButton.click(); // 저장 버튼 클릭 이벤트 실행
+          }
+        });
+
+        detailInput.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault(); // Enter 키의 기본 동작을 취소
+            saveButton.click(); // 저장 버튼 클릭 이벤트 실행
+          }
+        });
+
+        // // 수정 이벤트
+        // btnRetouch.addEventListener("click", function () {
+        //   // retouchPopup의 display를 토글
+        //   if (pagesArray.length > 0) {
+        //     retouchPopup.style.display =
+        //       retouchPopup.style.display === "none" ? "flex" : "none";
+        //   } else {
+        //     // 경고 메시지 출력
+        //     alert("노트 페이지가 없습니다.");
+        //   }
+        // });
+
+        // // 취소 이벤트
+        // let revoke = document.getElementById("revoke");
+
+        // revoke.addEventListener("click", function () {
+        //   // retouchPopup의 display를 none으로 변경
+        //   retouchPopup.style.display = "none";
+        // });
+      });
+
+      window.addEventListener("load", function () {
+        // 전체 페이지가 로드될 때까지 기다립니다.
+
+        // 요소에 대한 참조 가져오기
+        let startButton = document.getElementById("enterButton");
+        let wrapper = document.getElementById("wrapper");
+
+        // "입장" 버튼에 클릭 이벤트 리스너 추가
+        startButton.addEventListener("click", function () {
+          // #wrapper의 display 속성을 "flex"로 변경합니다.
+          // wrapper.style.display = "flex";
+          writeCont.style.transform= "scaleX(1)";
+          writeCont.style.opacity = 1;
+          
+          diary.style.transform= "scaleX(1)";
+          diary.style.opacity = 1;
+
+          // #start의 display 속성을 "none"으로 변경합니다.
+          document.getElementById("start").style.display = "none";
+        });
+      });
+
+    </script>
+  </head>
+  <!-- <body> -->
+  <body class="before-load">
+    <div class="bgCont">
+      <section id="intro">
+        <div class="title">
+          <h2>2024</h2>
+          <p>my own diary</p>
+        </div>
+        <img class="moveImg" src="./img/introBg02.png" alt="">
+        <img class="btmImg" src="./img/introBg03.png" alt="">
+      </section>
+      
+      <div id="start" style="z-index: 100;">
+        <div class="title">
+          <h2>2024</h2>
+          <p>my own diary</p>
+        </div>
+        <button style="cursor: pointer;" id="enterButton">start diary ▶</button>
+        <img src="./img/point.png" alt="">
+      </div>
+  
+      <div id="wrapper">
+        <div id="writeCont">
+          <input
+            id="title"
+            type="text"
+            placeholder="제목을 입력하세요"
+            name="title"
+          />
+          <!-- <input
+            id="detail"
+            type="text"
+            placeholder="내용을 입력하세요"
+            name="detail"
+          /> -->
+          <textarea
+            id="detail"
+            type="text"
+            placeholder="내용을 입력하세요"
+            name="detail"
+          ></textarea>
+          <button id="save" type="button">저장</button>
+        </div>
+  
+        <div id="diary">
+          <div id="note">
+            <div id="springCont"></div>
+            <div id="lineCont"></div>
+          </div>
+          <div id="btnWrap">
+            <!-- <button id="retouch" type="button" onclick="retouch()">수정</button> -->
+            <button id="del" type="button" onclick="del()">삭제</button>
+          </div>
+        </div>
+  
+        <!-- <div id="retouchPopup">
+          <h2 id="popTitle">내용 수정하기</h2>
+  
+          <input
+            id="reTitle"
+            type="text"
+            placeholder="수정할 제목을 입력하세요"
+            name="reTitle"
+          />
+          <input
+            id="reDetail"
+            type="text"
+            placeholder="수정할 내용을 입력하세요"
+            name="reDetail"
+          />
+  
+          <div id="reBtnWrap">
+            <button id="edit" type="button" onclick="edit()">완료</button>
+            <button id="revoke" type="button">취소</button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </body>
+</html>
